@@ -114,6 +114,8 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         //1. 查看redis是否有数据
         String shopJson = stringRedisTemplate.opsForValue().get(key);
 
+        //isBlank:空、长度为0、字符串为回车空格等情况为true
+        //isEmpty：空、长度为0等情况为true
         if (StrUtil.isNotBlank(shopJson)) {
             //2. 有，返回数据
             //返回前将Json序列化为对象
@@ -123,7 +125,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
         //判断命中的是否是空值
         if (shopJson != null) {
-            //返回错误信息
+            //不等于null，就一定是空字符串了，返回错误信息
             return null;
         }
 
